@@ -8,15 +8,11 @@
 #include "application/Application.h"
 #include "glframework/texture.h"
 
-/*
-*1.实现纹理读取
-*2.实现纹理噪声混合
-*/
 GLuint vao;
 Shader* shader = nullptr;
-Texture* grassTexture = nullptr; //草地纹理
-Texture* landTexture = nullptr;  //土地纹理
-Texture* noiseTexture = nullptr; //噪声纹理
+Texture* grassTexture = nullptr;
+Texture* landTexture = nullptr;
+Texture* noiseTexture = nullptr;
 
 void OnResize(int width, int height) {
 	GL_CALL(glViewport(0, 0, width, height));
@@ -26,6 +22,8 @@ void OnResize(int width, int height) {
 void OnKey(int key, int action, int mods) {
 	std::cout << key << std::endl;
 }
+
+
 
 void prepareVAO() {
 	//1 准备positions colors
@@ -102,28 +100,37 @@ void prepareVAO() {
 }
 
 void prepareShader() {
-	shader = new Shader("assets/shaders/vertex.glsl","assets/shaders/fragment.glsl");
+	//shader = new Shader("assets/shaders/vertex.glsl","assets/shaders/fragment.glsl");
+	shader = new Shader((std::string(ASSETS_DIR) + "/shaders/vertex.glsl").c_str(), (std::string(ASSETS_DIR) + "/shaders/fragment.glsl").c_str());
 }
 
 void prepareTexture() {
-	grassTexture = new Texture("assets/textures/grass.jpg", 0);
-	landTexture = new Texture("assets/textures/land.jpg", 1);
-	noiseTexture = new Texture("assets/textures/noise.jpg", 2);
+	//grassTexture = new Texture("assets/textures/grass.jpg", 0);
+	//landTexture = new Texture("assets/textures/land.jpg", 1);
+	//noiseTexture = new Texture("assets/textures/noise.jpg", 2);
+
+	grassTexture = new Texture((std::string(ASSETS_DIR) + "/textures/grass.jpg").c_str(), 0);
+	landTexture = new Texture((std::string(ASSETS_DIR) + "/textures/land.jpg").c_str(), 1);
+	noiseTexture = new Texture((std::string(ASSETS_DIR) + "/textures/noise.jpg").c_str(), 2);
 }
 
 void render() {
 	//执行opengl画布清理操作
 	GL_CALL(glClear(GL_COLOR_BUFFER_BIT));
+
 	//绑定当前的program
 	shader->begin();
 	shader->setInt("grassSampler", 0);
 	shader->setInt("landSampler", 1);
 	shader->setInt("noiseSampler", 2);
+
 	//绑定当前的vao
 	GL_CALL(glBindVertexArray(vao));
+
 	//发出绘制指令
 	GL_CALL(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0));
 	GL_CALL(glBindVertexArray(0));
+
 	shader->end();
 }
 
@@ -132,8 +139,10 @@ int main() {
 	if (!app->init(800, 600)) {
 		return -1;
 	}
+
 	app->setResizeCallback(OnResize);
 	app->setKeyBoardCallback(OnKey);
+
 	//设置opengl视口以及清理颜色
 	GL_CALL(glViewport(0, 0, 800, 600));
 	GL_CALL(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
@@ -143,8 +152,12 @@ int main() {
 	prepareTexture();
 
 	while (app->update()) {
+
 		render();
+		
 	}
+
 	app->destroy();
+
 	return 0;
 }

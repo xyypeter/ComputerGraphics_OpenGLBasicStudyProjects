@@ -94,7 +94,8 @@ void prepareVAO() {
 }
 
 void prepareShader() {
-	shader = new Shader("assets/shaders/vertex.glsl", "assets/shaders/fragment.glsl");
+	//shader = new Shader("assets/shaders/vertex.glsl", "assets/shaders/fragment.glsl");
+	shader = new Shader((std::string(ASSETS_DIR) + "/shaders/vertex.glsl").c_str(), (std::string(ASSETS_DIR) + "/shaders/fragment.glsl").c_str());
 }
 
 void prepareTexture() {
@@ -102,8 +103,8 @@ void prepareTexture() {
 	int width, height, channels;
 	//--反转y轴
 	stbi_set_flip_vertically_on_load(true);
-	unsigned char* data = stbi_load("assets/textures/hinata.jpg", &width, &height, &channels, STBI_rgb_alpha);
-	
+	//unsigned char* data = stbi_load("assets/textures/hinata.jpg", &width, &height, &channels, STBI_rgb_alpha);
+	unsigned char* data = stbi_load((std::string(ASSETS_DIR) + "/textures/goku.jpg").c_str(), &width, &height, &channels, STBI_rgb_alpha);
 	//2 生成纹理并且激活单元绑定
 	//--激活纹理单元--
 	glGenTextures(1, &texture);

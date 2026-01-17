@@ -11,8 +11,8 @@ project(OpenGL_Lecture)
 set(CMAKE_CXX_STANDARD 17)
 
 #拷入资源文件
-file(GLOB ASSETS "./assets" )
-file(COPY ${ASSETS} DESTINATION ${CMAKE_BINARY_DIR})
+#file(GLOB ASSETS "./assets" )
+#file(COPY ${ASSETS} DESTINATION ${CMAKE_BINARY_DIR})
 
 #规定头文件搜索路径
 include_directories(SYSTEM ${CMAKE_CURRENT_SOURCE_DIR}/thirdParty/include)
@@ -28,3 +28,18 @@ add_subdirectory(glframework)
 add_executable(openglStudy "main.cpp" "glad.c")
 
 target_link_libraries(openglStudy glfw3.lib wrapper app fw)
+
+# ========= 资源管理（关键） =========
+# 拷贝 assets 到运行目录
+file(COPY
+    ${CMAKE_CURRENT_SOURCE_DIR}/assets
+    DESTINATION ${CMAKE_BINARY_DIR}
+)
+
+# 注入资源根目录给 C++
+set(ASSETS_RUNTIME_DIR "${CMAKE_BINARY_DIR}/assets")
+
+target_compile_definitions(openglStudy PRIVATE
+    DEBUG
+    ASSETS_DIR="${ASSETS_RUNTIME_DIR}"
+)

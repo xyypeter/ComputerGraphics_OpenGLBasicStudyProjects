@@ -88,7 +88,8 @@ void prepareVAO() {
 }
 
 void prepareShader() {
-	shader = new Shader("assets/shaders/vertex.glsl", "assets/shaders/fragment.glsl");
+	//shader = new Shader("assets/shaders/vertex.glsl", "assets/shaders/fragment.glsl");
+	shader = new Shader((std::string(ASSETS_DIR) + "/shaders/vertex.glsl").c_str(), (std::string(ASSETS_DIR) + "/shaders/fragment.glsl").c_str());
 }
 
 void prepareTexture() {
@@ -100,7 +101,8 @@ void prepareTexture() {
 	//--反转y轴
 	//因为图片的像素往往是按照左上方为(0,0)坐标点组织数据，OpenGL按照左下方为(0,0),必须反转Y轴
 	stbi_set_flip_vertically_on_load(true);
-	unsigned char* data = stbi_load("assets/textures/goku.jpg", &width, &height, &channels, STBI_rgb_alpha);
+	//unsigned char* data = stbi_load("assets/textures/goku.jpg", &width, &height, &channels, STBI_rgb_alpha);
+	unsigned char* data = stbi_load((std::string(ASSETS_DIR) + "/textures/goku.jpg").c_str(), &width, &height, &channels, STBI_rgb_alpha);
 	//参数解释:STBI_rgb_alpha表示期望读取出来的数据格式(RGB\RGBA\GREY)
 	
 	//2 生成纹理并且激活单元绑定(注意:先激活某个纹理单元，再绑定某个纹理对象，可以将对象与单元链接，如果不首先激活，默认激活0号单元)

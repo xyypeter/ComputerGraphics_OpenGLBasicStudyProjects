@@ -5,7 +5,7 @@
 #include "application/application.h"
 using namespace std;
 
-GLuint vao,  ;//将这两个参数声明为全局变量，使用InterleavedBuffer
+GLuint vao, program;//将这两个参数声明为全局变量，使用InterleavedBuffer
 
 void OnResize(int width, int height) {
 	GL_CALL(glViewport(0, 0, width, height));

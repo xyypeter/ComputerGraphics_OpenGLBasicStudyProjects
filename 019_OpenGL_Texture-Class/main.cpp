@@ -101,11 +101,13 @@ void prepareVAO() {
 }
 
 void prepareShader() {
-	shader = new Shader("assets/shaders/vertex.glsl","assets/shaders/fragment.glsl");
+	//shader = new Shader("assets/shaders/vertex.glsl","assets/shaders/fragment.glsl");
+	shader = new Shader((std::string(ASSETS_DIR) + "/shaders/vertex.glsl").c_str(), (std::string(ASSETS_DIR) + "/shaders/fragment.glsl").c_str());
 }
 
 void prepareTexture() {
-	texture = new Texture("assets/textures/hinata.jpg", 0);//绑定0号单元
+	//texture = new Texture("assets/textures/hinata.jpg", 0);//绑定0号单元
+	texture = new Texture((std::string(ASSETS_DIR) + "/textures/hinata.jpg").c_str(), 0);//绑定0号单元
 }
 
 void render() {
